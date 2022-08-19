@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED) //protected로 new 생성 불가하게
 public class Item {
     @Id
     @GeneratedValue

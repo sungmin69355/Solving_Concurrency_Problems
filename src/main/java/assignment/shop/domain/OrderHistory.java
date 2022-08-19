@@ -27,6 +27,9 @@ public class OrderHistory {
     @Embedded
     private Address address;
 
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status; //주문상태 [ORDER, CANCEL]
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
