@@ -1,5 +1,6 @@
-package assignment.shop.dto;
+package assignment.shop.dto.common;
 
+import assignment.shop.dto.item.ItemDto;
 import lombok.Data;
 
 import java.util.List;

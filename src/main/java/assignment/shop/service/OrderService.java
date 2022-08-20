@@ -4,9 +4,11 @@ import assignment.shop.domain.Address;
 import assignment.shop.domain.Item;
 import assignment.shop.domain.Order;
 import assignment.shop.domain.OrderItem;
+import assignment.shop.exception.ApiException;
 import assignment.shop.repository.ItemRepository;
 import assignment.shop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +32,7 @@ public class OrderService {
         Item item = itemRepository.findOne(itemId);
 
         if(item == null){
-            throw new IllegalStateException("없는 상품입니다.");
+            throw new ApiException(HttpStatus.ACCEPTED, "202", "없는 상품입니다.");
         }
         //Todo:히스토리 관리 필요
 

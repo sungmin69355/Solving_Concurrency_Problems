@@ -1,8 +1,8 @@
 package assignment.shop.api;
 
 import assignment.shop.domain.Item;
-import assignment.shop.dto.ItemDto;
-import assignment.shop.dto.ResultDto;
+import assignment.shop.dto.item.ItemDto;
+import assignment.shop.dto.common.ResultDto;
 import assignment.shop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

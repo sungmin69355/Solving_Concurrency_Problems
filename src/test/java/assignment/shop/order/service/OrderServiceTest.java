@@ -4,7 +4,7 @@ import assignment.shop.domain.Address;
 import assignment.shop.domain.Item;
 import assignment.shop.domain.Order;
 import assignment.shop.domain.OrderStatus;
-import assignment.shop.exception.NotEnoughStockException;
+import assignment.shop.exception.ApiException;
 import assignment.shop.repository.ItemRepository;
 import assignment.shop.repository.OrderRepository;
 import assignment.shop.service.OrderService;
@@ -69,7 +69,7 @@ public class OrderServiceTest {
         int count = 110;
 
         //then
-        assertThrows(NotEnoughStockException.class, ()->{
+        assertThrows(ApiException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }
@@ -84,7 +84,7 @@ public class OrderServiceTest {
         int count = 100;
 
         //then
-        assertThrows(NotEnoughStockException.class, ()->{
+        assertThrows(ApiException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }
@@ -99,7 +99,7 @@ public class OrderServiceTest {
         int count = 100;
 
         //then
-        assertThrows(IllegalStateException.class, ()->{
+        assertThrows(ApiException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }
@@ -114,7 +114,7 @@ public class OrderServiceTest {
         int count = 100;
 
         //then
-        assertThrows(NotEnoughStockException.class, ()->{
+        assertThrows(ApiException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }

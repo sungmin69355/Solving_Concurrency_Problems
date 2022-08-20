@@ -1,4 +1,4 @@
-package assignment.shop.dto;
+package assignment.shop.dto.item;
 
 import assignment.shop.domain.Item;
 import assignment.shop.domain.ItemStatus;
