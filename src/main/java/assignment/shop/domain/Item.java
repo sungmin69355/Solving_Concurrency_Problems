@@ -45,6 +45,9 @@ public class Item {
         int restStock = this.stockQuantity - quantity;
         if (restStock < 0) {
             throw new NotEnoughStockException("전시된 상품보다 많은 수량을 선택했습니다.");
+        } else if (restStock == 0){
+            //판매완료 시 판매상태를 판매중지로 전환
+            this.status = ItemStatus.SOLDOUT;
         }
         this.stockQuantity = restStock;
     }

@@ -82,7 +82,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void 없는상품으로주문시실패() throws Exception {
+    public void 없는상품으로_주문시_실패() throws Exception {
         //given
         Long memberId = 100L;
         Long itemId = 500000L;
@@ -92,6 +92,21 @@ public class OrderServiceTest {
 
         //then
         assertThrows(IllegalStateException.class, ()->{
+            orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
+        });
+    }
+
+    @Test
+    public void 판매중지인_상품주문시_실패() throws Exception {
+        //given
+        Long memberId = 100L;
+        Long itemId = 4L;
+        Address address = new Address("서울시" ,"1번가", "205-106");
+        int orderPrice = 34000;
+        int count = 100;
+
+        //then
+        assertThrows(NotEnoughStockException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }

@@ -32,6 +32,9 @@ public class OrderItem {
         orderItem.setItem(item);
         orderItem.setOrderPrice(orderPrice);
         orderItem.setCount(count);
+        if(item.getStatus() == ItemStatus.SOLDOUT){
+            throw new NotEnoughStockException("판매가 중단된 제품입니다.");
+        }
         item.TotalPriceValidation(count, orderPrice); //가격검증
         item.removeStock(count); //아이템의 재고를 줄여준다.
         return orderItem;

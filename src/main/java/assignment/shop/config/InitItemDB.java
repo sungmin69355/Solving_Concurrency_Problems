@@ -40,6 +40,10 @@ public class InitItemDB {
             Item item3 = createItem("(아마존)Corsair qoswjstm LPX 테스크탑 메모리32GB(2X16GB) DDR4 3200(PC4-288000) C18 1.35V블랙", 143880, 50000, ItemStatus.SALE,
                     1003L, "하이닉스", LocalDateTime.parse("2022-08-10T00:00:00", formatter),LocalDateTime.parse("2025-12-31T23:59:59", formatter));
             em.persist(item3);
+
+            Item item4 = createItem("침착해지자.", 143880, 0, ItemStatus.SOLDOUT,
+                    1004L, "11st", LocalDateTime.parse("2022-08-10T00:00:00", formatter),LocalDateTime.parse("2025-12-31T23:59:59", formatter));
+            em.persist(item4);
         }
 
         private Item createItem(String name, int price, int stockQuantity, ItemStatus status, Long sellerId, String sellerName, LocalDateTime displayStartDate, LocalDateTime displayEndDate){

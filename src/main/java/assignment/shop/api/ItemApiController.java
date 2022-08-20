@@ -2,6 +2,7 @@ package assignment.shop.api;
 
 import assignment.shop.domain.Item;
 import assignment.shop.dto.ItemDto;
+import assignment.shop.dto.ResultDto;
 import assignment.shop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,12 +28,12 @@ public class ItemApiController {
      * @return List<ItemDto>
      */
     @GetMapping("/item")
-    public List<ItemDto> getItemDisplayDate(@RequestParam("display_date")
+    public ResultDto getItemDisplayDate(@RequestParam("display_date")
                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime displayDate){
         List<Item> items = itemService.findDisplayDate(displayDate);
         List<ItemDto> result = items.stream()
                 .map(i -> new ItemDto(i))
                 .collect(toList());
-        return result;
+        return new ResultDto("200", result);
     }
 }
