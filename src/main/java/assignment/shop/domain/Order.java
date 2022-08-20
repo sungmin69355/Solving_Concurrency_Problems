@@ -44,9 +44,10 @@ public class Order {
     }
 
     //==생성 메서드==//
-    public static Order createOrder(Long memberId, OrderItem... orderItems){
+    public static Order createOrder(Long memberId, Address address, OrderItem... orderItems){
         Order order = new Order();
         order.setMemberId(memberId);
+        order.setAddress(address);
         for(OrderItem orderItem: orderItems){
             order.addOrderItem(orderItem);
         }
@@ -64,6 +65,15 @@ public class Order {
         for(OrderItem orderItem: orderItems){
             orderItem.cencel();
         }
+    }
+
+    /**
+     * 전체 주문 가격 조회
+     */
+    public int getTotalPrice() {
+        return orderItems.stream()
+                .mapToInt(OrderItem::getTotalPrice)
+                .sum();
     }
 
 

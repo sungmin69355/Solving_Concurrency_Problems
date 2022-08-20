@@ -2,7 +2,7 @@ package assignment.shop.item.repository;
 
 import assignment.shop.domain.Item;
 import assignment.shop.repository.ItemRepository;
-import org.junit.jupiter.api.Assertions;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @WebAppConfiguration
 @SpringBootTest
 @Transactional
-class ItemRepositoryTest {
+public class ItemRepositoryTest {
 
     @PersistenceContext
     EntityManager em;
@@ -40,7 +40,7 @@ class ItemRepositoryTest {
         List<Item> item  = itemRepository.findDisplayDate(displayDate);
 
         //then
-        Assertions.assertEquals(item.size(), 3);
+        Assert.assertEquals("전시기간에 상품이 있는경우", item.size(), 3);
     }
 
     @Test
@@ -53,6 +53,6 @@ class ItemRepositoryTest {
         List<Item> item  = itemRepository.findDisplayDate(displayDate);
 
         //then
-        Assertions.assertEquals(item.size(), 0);
+        Assert.assertEquals("전시기간에 상품이 없는경우",item.size(), 0);
     }
 }
