@@ -40,7 +40,7 @@ public class ItemRepositoryTest {
         List<Item> item  = itemRepository.findDisplayDate(displayDate);
 
         //then
-        Assert.assertEquals("전시기간에 상품이 있는경우", item.size(), 3);
+        Assert.assertEquals("전시기간에 상품이 있는경우", item.size(), 4);
     }
 
     @Test

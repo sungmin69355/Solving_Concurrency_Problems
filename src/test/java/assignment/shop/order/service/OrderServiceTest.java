@@ -1,9 +1,11 @@
 package assignment.shop.order.service;
 
 import assignment.shop.domain.Address;
+import assignment.shop.domain.Item;
 import assignment.shop.domain.Order;
 import assignment.shop.domain.OrderStatus;
 import assignment.shop.exception.NotEnoughStockException;
+import assignment.shop.repository.ItemRepository;
 import assignment.shop.repository.OrderRepository;
 import assignment.shop.service.OrderService;
 import org.junit.Assert;
@@ -15,6 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -29,6 +35,8 @@ public class OrderServiceTest {
     OrderService orderService;
     @Autowired
     OrderRepository orderRepository;
+    @Autowired
+    ItemRepository itemRepository;
 
     @Test
     public void 상품주문() throws Exception {
@@ -109,6 +117,47 @@ public class OrderServiceTest {
         assertThrows(NotEnoughStockException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
+    }
+
+    @Test
+    public void 주문취소() throws Exception {
+        //given
+        Long memberId = 100L;
+        Long itemId = 1L;
+        Address address = new Address("서울시" ,"1번가", "205-106");
+        int orderPrice = 3400000;
+        int count = 1;
+
+        //when
+        Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
+        orderService.cancelOrder(orderId);
+        Order order = orderRepository.findOne(orderId);
+        Item item = itemRepository.findOne(1L);
+
+
+        //then
+        Assert.assertEquals("주문 취소시 상태는 CANCEL 이다. ", OrderStatus.CANCEL, order.getStatus());
+        Assert.assertEquals("주문이 취소된 상품은 그만큼 재고가 증가해야 한다.", 100, item.getStockQuantity());
+    }
+
+    @Test
+    public void 주문내역조회() throws Exception {
+        //given
+        Long memberId = 100L;
+        Long itemId = 1L;
+        Address address = new Address("서울시" ,"1번가", "205-106");
+        int orderPrice = 3400000;
+        int count = 1;
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        LocalDateTime startDate =  LocalDateTime.parse("2010-08-15T00:00:00", formatter);
+        LocalDateTime endDate =  LocalDateTime.parse("2050-08-15T00:00:00", formatter);
+
+        //when
+        Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
+        List<Order> orders =  orderService.findUserOrders(memberId, startDate, endDate);
+
+        //then
+        Assert.assertEquals("주문내역을 조회할 수 있다.", orders.size(), 1);
     }
 
 }

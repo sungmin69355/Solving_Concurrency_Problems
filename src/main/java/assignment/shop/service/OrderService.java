@@ -10,6 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -51,5 +54,13 @@ public class OrderService {
         //TODO: 히스토리 관리 필요, 주문이 맞는지 확인
         //주문 취소
         order.cancel();
+    }
+
+    /**
+     * 주문내역조회
+     */
+    public List<Order> findUserOrders(Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
+        List<Order> orders = orderRepository.findUserOrders(memberId,startDate,endDate);
+        return orders;
     }
 }

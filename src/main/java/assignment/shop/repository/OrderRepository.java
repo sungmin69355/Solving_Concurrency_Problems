@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -21,8 +22,12 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
-    public List<Order> findAll() {
-        return em.createQuery("select o from Order o", Order.class)
+    public List<Order> findUserOrders(Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
+        return em.createQuery("select o from Order o " +
+                        " where o.orderDate >= :startDate and o.orderDate <= :endDate and o.memberId  = :memberId ", Order.class)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .setParameter("memberId", memberId)
                 .getResultList();
     }
 

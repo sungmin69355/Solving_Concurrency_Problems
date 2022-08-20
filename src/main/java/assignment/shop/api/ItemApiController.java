@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -25,7 +24,7 @@ public class ItemApiController {
     /**
      * 전시기간 상품 조회 API
      * @param displayDate
-     * @return List<ItemDto>
+     * @return ResultDto
      */
     @GetMapping("/item")
     public ResultDto getItemDisplayDate(@RequestParam("display_date")
