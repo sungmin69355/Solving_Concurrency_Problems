@@ -20,10 +20,6 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderhistory_id", insertable = false, updatable = false)
-    private List<OrderHistory> orderHistories = new ArrayList<>();
-    
     private Long memberId;
 
     @Embedded

@@ -57,10 +57,18 @@ public class OrderService {
     }
 
     /**
-     * 주문내역조회
+     * 주문내역 기간으로조회
      */
     public List<Order> findUserOrders(Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
         List<Order> orders = orderRepository.findUserOrders(memberId,startDate,endDate);
         return orders;
+    }
+
+    /**
+     * 주문내역 조회
+     */
+    public Order findOne(Long orderId) {
+        Order order = orderRepository.findOne(orderId);
+        return order;
     }
 }
