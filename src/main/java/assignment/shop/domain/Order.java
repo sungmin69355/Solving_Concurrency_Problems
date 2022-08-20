@@ -52,7 +52,7 @@ public class Order {
         }
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
-        return order; //이걸로 모두 해결
+        return order;
     }
 
     //==비즈니스 로직==//
