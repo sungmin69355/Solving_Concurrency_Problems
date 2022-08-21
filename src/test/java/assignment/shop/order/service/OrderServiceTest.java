@@ -141,6 +141,26 @@ public class OrderServiceTest {
     }
 
     @Test
+    public void 주문취소는_한번만보장() throws Exception {
+        //given
+        Long memberId = 100L;
+        Long itemId = 1L;
+        Address address = new Address("서울시" ,"1번가", "205-106");
+        int orderPrice = 3400000;
+        int count = 1;
+
+        //when
+        Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
+        orderService.cancelOrder(orderId);
+
+        //then
+        assertThrows(ApiException.class, ()->{
+            orderService.cancelOrder(orderId);
+        });
+    }
+
+
+    @Test
     public void 주문내역조회() throws Exception {
         //given
         Long memberId = 100L;

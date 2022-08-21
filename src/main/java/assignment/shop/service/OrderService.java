@@ -1,9 +1,7 @@
 package assignment.shop.service;
 
-import assignment.shop.domain.Address;
-import assignment.shop.domain.Item;
-import assignment.shop.domain.Order;
-import assignment.shop.domain.OrderItem;
+import assignment.shop.domain.*;
+import assignment.shop.dto.common.ResultDto;
 import assignment.shop.exception.ApiException;
 import assignment.shop.repository.ItemRepository;
 import assignment.shop.repository.OrderRepository;
@@ -52,6 +50,9 @@ public class OrderService {
     public void cancelOrder(Long orderId){
         //주문 조회
         Order order = orderRepository.findOne(orderId);
+        if(order.getStatus() == OrderStatus.CANCEL){
+            throw new ApiException(HttpStatus.BAD_REQUEST, "400", "이미 취소한 주문입니다.");
+        }
         //주문 취소
         order.cancel();
     }
