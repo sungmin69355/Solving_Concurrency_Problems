@@ -2,7 +2,7 @@
 
 1.개발환경
 -------------
-* Java11, Spring boot 2.7.3, JPA, H2, Gradle, Juint5
+* Java11, Spring boot 2.7.3, JPA, H2, Gradle, Juint4.13.2
 
 2.ERD
 -------------
