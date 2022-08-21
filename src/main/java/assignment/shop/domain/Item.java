@@ -3,6 +3,7 @@ package assignment.shop.domain;
 import assignment.shop.exception.ApiException;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@Audited
 public class Item {
     @Id
     @GeneratedValue

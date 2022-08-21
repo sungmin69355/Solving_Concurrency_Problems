@@ -4,11 +4,14 @@ import assignment.shop.exception.ApiException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
 
 @Entity
+@Audited
 @Getter @Setter
 public class OrderItem {
     @Id @GeneratedValue
@@ -16,6 +19,7 @@ public class OrderItem {
     private Long id;
 
     @JsonIgnore
+    @Audited
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item;
