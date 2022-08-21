@@ -2,10 +2,15 @@
 
 실행방법
 ------
-* 해당 프로젝트를 다운로드를 합니다.
 * 11st.mv.db를 ~/ 디렉토리로 옮겨줍니다.
 * h2를 실행해줍니다.
-* 해당 프로젝트의 ShopApplication를 실행해줍니다.
+```
+cd [클론받은 리포지토리 경로]
+chmod +x gradlew
+./gradlew build
+
+java -jar build/libs/shop-0.0.1-SNAPSHOT.jar
+```
 
 1.개발환경
 -------------
