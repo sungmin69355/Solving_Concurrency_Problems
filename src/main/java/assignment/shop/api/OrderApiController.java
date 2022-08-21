@@ -8,9 +8,9 @@ import assignment.shop.dto.order.GetOrdersReqDto;
 import assignment.shop.dto.order.GetOrdersResDto;
 import assignment.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -28,7 +28,7 @@ public class OrderApiController {
      */
     @PostMapping("/orders")
     public ResultDto createOrder(@RequestHeader(name = "x-user-id") String user,
-                                 @RequestBody @Validated CreateOrderReqDto createOrderReqDto) {
+                                 @Valid @RequestBody CreateOrderReqDto createOrderReqDto) {
         if(!user.equals("greatepeople")){
             return new ResultDto("401", "올바르지 않은 유저입니다.");
         } else {
@@ -49,7 +49,7 @@ public class OrderApiController {
      */
     @PostMapping("/orders/cancel")
     public ResultDto cancelOrder(@RequestHeader(name = "x-user-id") String user,
-                                 @RequestBody CancelOrderReqDto cancelOrderReqDto){
+                                 @Valid @RequestBody CancelOrderReqDto cancelOrderReqDto){
 
         if(!user.equals("greatepeople")) {
             return new ResultDto("401", "올바르지 않은 유저입니다.");
@@ -74,7 +74,7 @@ public class OrderApiController {
      * @return
      */
     @GetMapping("/orders")
-    public ResultDto getOrders(@RequestBody GetOrdersReqDto getOrdersReqDto) {
+    public ResultDto getOrders(@Valid @RequestBody GetOrdersReqDto getOrdersReqDto) {
 
         //TODO: 주문취소내역도 같이보여줘야하는지
         List<Order> orders = orderService.findUserOrders(getOrdersReqDto.getMemberId(),
