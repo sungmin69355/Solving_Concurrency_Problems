@@ -52,7 +52,6 @@ public class OrderService {
     public void cancelOrder(Long orderId){
         //주문 조회
         Order order = orderRepository.findOne(orderId);
-        //TODO: 히스토리 관리 필요, 주문이 맞는지 확인
         //주문 취소
         order.cancel();
     }

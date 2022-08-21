@@ -13,14 +13,6 @@ import java.util.List;
 public class ItemRepository {
     private final EntityManager em;
 
-    public void save(Item item){ //새로 생성된 객체
-        if(item.getId() == null){
-            em.persist(item);
-        }else{
-            em.merge(item);
-        }
-    }
-
     public Item findOne(Long id){
         return em.find(Item.class,id);
     }

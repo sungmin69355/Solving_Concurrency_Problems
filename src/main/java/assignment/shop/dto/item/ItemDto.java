@@ -2,7 +2,6 @@ package assignment.shop.dto.item;
 
 import assignment.shop.domain.Item;
 import assignment.shop.domain.ItemStatus;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.EnumType;
