@@ -1,6 +1,7 @@
 package assignment.shop.api;
 
 import assignment.shop.domain.Order;
+import assignment.shop.domain.OrderStatus;
 import assignment.shop.dto.common.ResultDto;
 import assignment.shop.dto.order.CancelOrderReqDto;
 import assignment.shop.dto.order.CreateOrderReqDto;
@@ -57,10 +58,13 @@ public class OrderApiController {
 
         //TODO : 주문한사람과 취소한사람이 같은지 검증필요
         Order order = orderService.findOne(cancelOrderReqDto.getOrderId());
+
         if(order == null){
             return new ResultDto("400", "주문내역이 없습니다.");
         } else if(order.getTotalPrice() != cancelOrderReqDto.getCancelPrice()) {
             return new ResultDto("400", "취소금액이 맞지않습니다.");
+        } else if(order.getStatus().equals(OrderStatus.CANCEL)){
+            return new ResultDto("400", "이미 취소한 주문입니다.");
         }
 
         orderService.cancelOrder(cancelOrderReqDto.getOrderId());
