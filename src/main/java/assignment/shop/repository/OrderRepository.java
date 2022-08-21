@@ -24,6 +24,8 @@ public class OrderRepository {
 
     public List<Order> findUserOrders(Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
         return em.createQuery("select o from Order o " +
+                        " join fetch o.orderItems oi " +
+                        " join fetch oi.item i" +
                         " where o.orderDate >= :startDate and o.orderDate <= :endDate and o.memberId  = :memberId ", Order.class)
                 .setParameter("startDate", startDate)
                 .setParameter("endDate", endDate)
