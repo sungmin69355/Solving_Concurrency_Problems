@@ -28,7 +28,7 @@ public class ItemApiController {
      * @param getItemDisplayDateReqDto
      * @return ResultDto
      */
-    @GetMapping("/item")
+    @GetMapping("/items")
     public ResultDto getItemDisplayDate(@RequestBody
                                                 @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) GetItemDisplayDateReqDto getItemDisplayDateReqDto){
         List<Item> items = itemService.findDisplayDate(getItemDisplayDateReqDto.getDisplayDate());

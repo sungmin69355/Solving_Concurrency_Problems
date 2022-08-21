@@ -2,7 +2,7 @@
 
 1.개발환경
 -------------
-* Java11, Spring boot 2.73, JPA, H2, Gradle, Juint5
+* Java11, Spring boot 2.7.3, JPA, H2, Gradle, Juint5
 
 2.ERD
 -------------
@@ -169,12 +169,13 @@ item_aud (
 3.API Spec Document
 -------------
 ### Request
-* 전시상품조회 `GET /item?display_date=2022-08-10T00:00:00`
+* 전시상품조회 `GET /items`
 #### INPUT
 ```
 GET {URL}
 content-type: application/json
 {
+    "display_date" : "2022-08-10T00:00:00"
 }
 ```
 #### OUTPUT
@@ -298,3 +299,6 @@ content-type: application/json
     ]
 }
 ```
+4.개선해야할 점 및 회고록
+-------------
+... 작성 중 
