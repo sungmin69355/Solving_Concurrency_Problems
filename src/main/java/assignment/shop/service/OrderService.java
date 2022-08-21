@@ -34,7 +34,6 @@ public class OrderService {
         if(item == null){
             throw new ApiException(HttpStatus.ACCEPTED, "202", "없는 상품입니다.");
         }
-        //Todo:히스토리 관리 필요
 
         //주문상품 생성
         OrderItem orderItem = OrderItem.createOrderItem(item, orderPrice, count);

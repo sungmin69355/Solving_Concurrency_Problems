@@ -56,9 +56,12 @@ public class Item {
     /**
      * 주문가격 검증
      */
-    public void TotalPriceValidation(int count, int orderPrice) {
-        if((price * count) > orderPrice ){
+    public void TotalPriceValidation(int OrderCount, int orderPrice) {
+        if((price * OrderCount) > orderPrice ){
             throw new ApiException(HttpStatus.ACCEPTED, "202", "가격이 부족합니다.");
+        }
+        if((price * OrderCount) != orderPrice ){
+            throw new ApiException(HttpStatus.ACCEPTED, "202", "수량과 가격을 확인해주세요.");
         }
     }
 
