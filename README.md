@@ -278,7 +278,7 @@ content-type: application/json
 }
 ```
 ### Request
-* 주문내역조회 `POST /orders`
+* 주문내역조회 `GET /orders`
 #### INPUT
 ```
 POST {URL}
