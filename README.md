@@ -180,7 +180,7 @@ item_aud (
 3.API Spec Document
 -------------
 ### Request
-* 전시상품조회 `GET /items`
+* 전시상품조회 `GET /items?display_date=2022-08-10T00:00:00`
 #### INPUT
 ```
 GET {URL}
