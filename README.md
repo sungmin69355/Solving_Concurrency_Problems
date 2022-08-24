@@ -1,4 +1,4 @@
-# 11st_assignment
+# Solving_Concurrency_Problems
 
 실행방법
 ------
