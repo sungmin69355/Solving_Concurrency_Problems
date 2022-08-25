@@ -1,17 +1,16 @@
 package assignment.shop.api;
 
 import assignment.shop.domain.Item;
-import assignment.shop.dto.item.GetItemDisplayDateReqDto;
 import assignment.shop.dto.item.ItemDto;
 import assignment.shop.dto.common.ResultDto;
 import assignment.shop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -24,13 +23,13 @@ public class ItemApiController {
 
     /**
      * 전시기간 상품 조회 API
-     * @param getItemDisplayDateReqDto
+     * @param displayDate
      * @return ResultDto
      */
     @GetMapping("/items")
-    public ResultDto getItemDisplayDate(@Valid @RequestBody
-                                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) GetItemDisplayDateReqDto getItemDisplayDateReqDto){
-        List<Item> items = itemService.findDisplayDate(getItemDisplayDateReqDto.getDisplayDate());
+    public ResultDto getItemDisplayDate(@RequestParam("display_date")
+                                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime displayDate){
+        List<Item> items = itemService.findDisplayDate(displayDate);
         List<ItemDto> result = items.stream()
                 .map(i -> new ItemDto(i))
                 .collect(toList());
