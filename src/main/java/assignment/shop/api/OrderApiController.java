@@ -5,13 +5,14 @@ import assignment.shop.domain.OrderStatus;
 import assignment.shop.dto.common.ResultDto;
 import assignment.shop.dto.order.CancelOrderReqDto;
 import assignment.shop.dto.order.CreateOrderReqDto;
-import assignment.shop.dto.order.GetOrdersReqDto;
 import assignment.shop.dto.order.GetOrdersResDto;
 import assignment.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -74,15 +75,17 @@ public class OrderApiController {
 
     /**
      * 주문 내역 조회 API
-     * @param getOrdersReqDto
+     * @param
      * @return
      */
     @GetMapping("/orders")
-    public ResultDto getOrders(@Valid @RequestBody GetOrdersReqDto getOrdersReqDto) {
+    public ResultDto getOrders(@RequestParam("memeber_id)") Long memberId,
+                               @RequestParam("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                               @RequestParam("end_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
+    )  {
 
         //TODO: 주문취소내역도 같이보여줘야하는지
-        List<Order> orders = orderService.findUserOrders(getOrdersReqDto.getMemberId(),
-                getOrdersReqDto.getStartDate(), getOrdersReqDto.getEndDate());
+        List<Order> orders = orderService.findUserOrders(memberId, startDate, endDate);
         List<GetOrdersResDto> result = orders.stream()
                 .map(o -> new GetOrdersResDto(o))
                 .collect(toList());
