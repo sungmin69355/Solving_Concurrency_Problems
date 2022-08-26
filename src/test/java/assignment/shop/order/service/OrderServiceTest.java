@@ -8,7 +8,7 @@ import assignment.shop.exception.ApiException;
 import assignment.shop.repository.ItemRepository;
 import assignment.shop.repository.OrderRepository;
 import assignment.shop.service.OrderService;
-import org.junit.Assert;
+import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +22,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @WebAppConfiguration
 @SpringBootTest
@@ -54,9 +55,9 @@ public class OrderServiceTest {
         //then
         Order order = orderRepository.findOne(orderId);
 
-        Assert.assertEquals("상품 주문시 상태는 ORDER", OrderStatus.ORDER, order.getStatus());
-        Assert.assertEquals("주문한 상품 종류 수가 정확해야 한다", 1, order.getOrderItems().size());
-        Assert.assertEquals("주문 가격은 가격 * 수량이다.", orderPrice, order.getTotalPrice());
+        assertEquals("상품 주문시 상태는 ORDER", OrderStatus.ORDER, order.getStatus());
+        assertEquals("주문한 상품 종류 수가 정확해야 한다", 1, order.getOrderItems().size());
+        assertEquals("주문 가격은 가격 * 수량이다.", orderPrice, order.getTotalPrice());
     }
 
     @Test
@@ -136,8 +137,8 @@ public class OrderServiceTest {
 
 
         //then
-        Assert.assertEquals("주문 취소시 상태는 CANCEL 이다. ", OrderStatus.CANCEL, order.getStatus());
-        Assert.assertEquals("주문이 취소된 상품은 그만큼 재고가 증가해야 한다.", 100, item.getStockQuantity());
+        assertEquals("주문 취소시 상태는 CANCEL 이다. ", OrderStatus.CANCEL, order.getStatus());
+        assertEquals("주문이 취소된 상품은 그만큼 재고가 증가해야 한다.", 100, item.getStockQuantity());
     }
 
     @Test
@@ -177,7 +178,7 @@ public class OrderServiceTest {
         List<Order> orders =  orderService.findUserOrders(memberId, startDate, endDate);
 
         //then
-        Assert.assertEquals("주문내역을 조회할 수 있다.", orders.size(), 1);
+        assertEquals("주문내역을 조회할 수 있다.", orders.size(), 1);
     }
 
 }

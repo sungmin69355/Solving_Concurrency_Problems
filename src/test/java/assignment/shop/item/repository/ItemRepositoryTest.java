@@ -2,7 +2,6 @@ package assignment.shop.item.repository;
 
 import assignment.shop.domain.Item;
 import assignment.shop.repository.ItemRepository;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,8 +14,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static org.springframework.test.util.AssertionErrors.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @WebAppConfiguration
 @SpringBootTest
@@ -40,7 +39,7 @@ public class ItemRepositoryTest {
         List<Item> item  = itemRepository.findDisplayDate(displayDate);
 
         //then
-        Assert.assertEquals("전시기간에 상품이 있는경우", item.size(), 4);
+        assertEquals("전시기간에 상품이 있는경우", item.size(), 4);
     }
 
     @Test
@@ -53,6 +52,6 @@ public class ItemRepositoryTest {
         List<Item> item  = itemRepository.findDisplayDate(displayDate);
 
         //then
-        Assert.assertEquals("전시기간에 상품이 없는경우",item.size(), 0);
+        assertEquals("전시기간에 상품이 없는경우",item.size(), 0);
     }
 }
