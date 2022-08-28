@@ -8,7 +8,6 @@ import assignment.shop.exception.ApiException;
 import assignment.shop.repository.ItemRepository;
 import assignment.shop.repository.OrderRepository;
 import assignment.shop.service.OrderService;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
