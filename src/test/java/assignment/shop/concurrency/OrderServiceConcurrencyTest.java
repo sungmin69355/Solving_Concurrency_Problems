@@ -46,19 +46,19 @@ public class OrderServiceConcurrencyTest {
         int count = 10;
 
         int threadCount = 200;
-        ExecutorService executorService = Executors.newFixedThreadPool(32);
-        CountDownLatch countDownLatch = new CountDownLatch(threadCount);
+        ExecutorService executorService = Executors.newFixedThreadPool(32); //고정된 쓰레드 풀 생성
+        CountDownLatch countDownLatch = new CountDownLatch(threadCount); //어떤 쓰레드가 다른 쓰레드에서 작업이 완료될 때 까지 기다릴 수 있도록 해주는 클래스
 
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(()->{
                 try {
                     orderService.order(memberId, itemId, orderPrice, address, count);
                 } finally {
-                    countDownLatch.countDown();
+                    countDownLatch.countDown(); //Latch가 1개씩 감소된다.
                 }
             });
         }
-        countDownLatch.await();
+        countDownLatch.await(); //Latch가 0이될때까지 기다린다.
 
         //when
         List<Order> orders = orderRepository.findUserOrders(100L, startDate, endDate);
