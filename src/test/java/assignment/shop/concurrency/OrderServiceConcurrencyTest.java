@@ -6,7 +6,6 @@ import assignment.shop.domain.Order;
 import assignment.shop.repository.ItemRepository;
 import assignment.shop.repository.OrderRepository;
 import assignment.shop.service.OrderService;
-import org.assertj.core.api.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,7 +58,6 @@ public class OrderServiceConcurrencyTest {
             });
         }
         countDownLatch.await(); //Latch가 0이될때까지 기다린다.
-
         //when
         List<Order> orders = orderRepository.findUserOrders(100L, startDate, endDate);
 
