@@ -291,7 +291,7 @@ content-type: application/json
 * 주문내역조회 `GET /orders?startDate=2022-08-09T00:00:00?endDate=2022-08-30T00:00:00`
 #### INPUT
 ```
-POST {URL}
+GET {URL}
 -H x-user-id : greatepeople
 content-type: application/json
 ```
