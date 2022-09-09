@@ -1,7 +1,7 @@
-package assignment.shop.service;
+package assignment.shop.item.service;
 
-import assignment.shop.domain.Item;
-import assignment.shop.repository.ItemRepository;
+import assignment.shop.item.Item;
+import assignment.shop.item.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

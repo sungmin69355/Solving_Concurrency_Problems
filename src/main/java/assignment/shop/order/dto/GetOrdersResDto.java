@@ -1,7 +1,7 @@
-package assignment.shop.dto.order;
+package assignment.shop.order.dto;
 
-import assignment.shop.domain.Address;
-import assignment.shop.domain.Order;
+import assignment.shop.order.Address;
+import assignment.shop.order.Order;
 import lombok.Data;
 
 @Data

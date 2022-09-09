@@ -1,11 +1,11 @@
 package assignment.shop.concurrency;
 
 
-import assignment.shop.domain.Address;
-import assignment.shop.domain.Order;
-import assignment.shop.repository.ItemRepository;
-import assignment.shop.repository.OrderRepository;
-import assignment.shop.service.OrderService;
+import assignment.shop.order.Address;
+import assignment.shop.order.Order;
+import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.repository.OrderRepository;
+import assignment.shop.order.service.OrderService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

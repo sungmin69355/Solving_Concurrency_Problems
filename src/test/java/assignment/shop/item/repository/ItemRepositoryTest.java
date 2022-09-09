@@ -1,7 +1,6 @@
 package assignment.shop.item.repository;
 
-import assignment.shop.domain.Item;
-import assignment.shop.repository.ItemRepository;
+import assignment.shop.item.Item;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

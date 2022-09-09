@@ -1,7 +1,7 @@
 package assignment.shop.config;
 
-import assignment.shop.domain.Item;
-import assignment.shop.domain.ItemStatus;
+import assignment.shop.item.Item;
+import assignment.shop.item.ItemStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

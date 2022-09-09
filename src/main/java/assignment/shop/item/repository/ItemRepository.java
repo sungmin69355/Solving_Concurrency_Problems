@@ -1,6 +1,6 @@
-package assignment.shop.repository;
+package assignment.shop.item.repository;
 
-import assignment.shop.domain.Item;
+import assignment.shop.item.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;

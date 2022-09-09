@@ -1,6 +1,6 @@
-package assignment.shop.dto.order;
+package assignment.shop.order.dto;
 
-import assignment.shop.domain.Address;
+import assignment.shop.order.Address;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

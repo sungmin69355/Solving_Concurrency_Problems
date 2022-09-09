@@ -1,7 +1,7 @@
-package assignment.shop.dto.item;
+package assignment.shop.item.dto;
 
-import assignment.shop.domain.Item;
-import assignment.shop.domain.ItemStatus;
+import assignment.shop.item.Item;
+import assignment.shop.item.ItemStatus;
 import lombok.Data;
 
 import javax.persistence.EnumType;

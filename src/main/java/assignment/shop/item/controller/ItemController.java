@@ -1,9 +1,9 @@
-package assignment.shop.api;
+package assignment.shop.item.controller;
 
-import assignment.shop.domain.Item;
-import assignment.shop.dto.item.ItemDto;
-import assignment.shop.dto.common.ResultDto;
-import assignment.shop.service.ItemService;
+import assignment.shop.item.Item;
+import assignment.shop.item.dto.ItemDto;
+import assignment.shop.item.dto.ResultDto;
+import assignment.shop.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
-public class ItemApiController {
+public class ItemController {
 
     private final ItemService itemService;
 

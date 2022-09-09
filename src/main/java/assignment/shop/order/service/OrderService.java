@@ -1,10 +1,13 @@
-package assignment.shop.service;
+package assignment.shop.order.service;
 
-import assignment.shop.domain.*;
-import assignment.shop.dto.common.ResultDto;
 import assignment.shop.exception.ApiException;
-import assignment.shop.repository.ItemRepository;
-import assignment.shop.repository.OrderRepository;
+import assignment.shop.item.Item;
+import assignment.shop.order.Address;
+import assignment.shop.order.Order;
+import assignment.shop.order.OrderItem;
+import assignment.shop.order.OrderStatus;
+import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

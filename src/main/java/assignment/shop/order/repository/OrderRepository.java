@@ -1,6 +1,6 @@
-package assignment.shop.repository;
+package assignment.shop.order.repository;
 
-import assignment.shop.domain.Order;
+import assignment.shop.order.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

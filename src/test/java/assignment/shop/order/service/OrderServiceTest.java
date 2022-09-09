@@ -1,13 +1,12 @@
 package assignment.shop.order.service;
 
-import assignment.shop.domain.Address;
-import assignment.shop.domain.Item;
-import assignment.shop.domain.Order;
-import assignment.shop.domain.OrderStatus;
+import assignment.shop.order.Address;
+import assignment.shop.item.Item;
+import assignment.shop.order.Order;
+import assignment.shop.order.OrderStatus;
 import assignment.shop.exception.ApiException;
-import assignment.shop.repository.ItemRepository;
-import assignment.shop.repository.OrderRepository;
-import assignment.shop.service.OrderService;
+import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

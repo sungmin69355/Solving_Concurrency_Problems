@@ -1,4 +1,4 @@
-package assignment.shop.domain;
+package assignment.shop.item;
 
 public enum ItemStatus {
     SALE, SOLDOUT

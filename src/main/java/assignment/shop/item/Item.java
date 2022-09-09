@@ -1,4 +1,4 @@
-package assignment.shop.domain;
+package assignment.shop.item;
 
 import assignment.shop.exception.ApiException;
 import lombok.Getter;

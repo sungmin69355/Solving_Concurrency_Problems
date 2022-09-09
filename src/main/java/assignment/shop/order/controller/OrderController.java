@@ -1,12 +1,12 @@
-package assignment.shop.api;
+package assignment.shop.order.controller;
 
-import assignment.shop.domain.Order;
-import assignment.shop.domain.OrderStatus;
-import assignment.shop.dto.common.ResultDto;
-import assignment.shop.dto.order.CancelOrderReqDto;
-import assignment.shop.dto.order.CreateOrderReqDto;
-import assignment.shop.dto.order.GetOrdersResDto;
-import assignment.shop.service.OrderService;
+import assignment.shop.order.Order;
+import assignment.shop.order.OrderStatus;
+import assignment.shop.order.dto.CancelOrderReqDto;
+import assignment.shop.order.dto.CreateOrderReqDto;
+import assignment.shop.order.dto.GetOrdersResDto;
+import assignment.shop.order.dto.ResultDto;
+import assignment.shop.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequiredArgsConstructor
-public class OrderApiController {
+public class OrderController {
 
     private final OrderService orderService;
 
