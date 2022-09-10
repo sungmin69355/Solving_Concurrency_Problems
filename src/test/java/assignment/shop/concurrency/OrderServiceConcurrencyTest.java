@@ -33,7 +33,7 @@ public class OrderServiceConcurrencyTest {
     ItemRepository itemRepository;
 
     @Test
-    public void 재고가_100개_있는상품을_동시에_10개씩_20번_주문하면_10개의주문은_취소되어야한다() throws Exception {
+    public void 재고가_100개_있는상품을_동시에_10개씩_80번이상주문하면_10개의주문만_성공되어야한다() throws Exception {
         //given
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         LocalDateTime startDate =  LocalDateTime.parse("1999-08-15T00:00:00", formatter);
@@ -44,7 +44,7 @@ public class OrderServiceConcurrencyTest {
         int orderPrice = 34000000;
         int count = 10;
 
-        int threadCount = 200;
+        int threadCount = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(32); //고정된 쓰레드 풀 생성
         CountDownLatch countDownLatch = new CountDownLatch(threadCount); //어떤 쓰레드가 다른 쓰레드에서 작업이 완료될 때 까지 기다릴 수 있도록 해주는 클래스
 
