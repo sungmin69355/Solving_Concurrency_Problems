@@ -28,8 +28,6 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 @Transactional
 public class OrderServiceTest {
 
-    @PersistenceContext
-    EntityManager em;
     @Autowired
     OrderService orderService;
     @Autowired
@@ -38,13 +36,14 @@ public class OrderServiceTest {
     ItemRepository itemRepository;
 
     @Test
+    @Transactional
     public void 상품주문() throws Exception {
 
         //given
         Long memberId = 100L;
-        Long itemId = 1L;
+        Long itemId = 2L;
         Address address = new Address("서울시" ,"1번가", "205-106");
-        int orderPrice = 3400000;
+        int orderPrice = 10000;
         int count = 1;
 
         //when
@@ -59,6 +58,7 @@ public class OrderServiceTest {
     }
 
     @Test
+    @Transactional
     public void 상품주문_재고수량초과() throws Exception {
         //given
         Long memberId = 100L;
@@ -74,6 +74,7 @@ public class OrderServiceTest {
     }
 
     @Test
+    @Transactional
     public void 상품주문_가격부족() throws Exception {
         //given
         Long memberId = 100L;
@@ -89,6 +90,7 @@ public class OrderServiceTest {
     }
 
     @Test
+    @Transactional
     public void 없는상품으로_주문시_실패() throws Exception {
         //given
         Long memberId = 100L;
@@ -104,6 +106,7 @@ public class OrderServiceTest {
     }
 
     @Test
+    @Transactional
     public void 판매중지인_상품주문시_실패() throws Exception {
         //given
         Long memberId = 100L;
@@ -119,33 +122,35 @@ public class OrderServiceTest {
     }
 
     @Test
+    @Transactional
     public void 주문취소() throws Exception {
         //given
         Long memberId = 100L;
-        Long itemId = 1L;
+        Long itemId = 2L;
         Address address = new Address("서울시" ,"1번가", "205-106");
-        int orderPrice = 3400000;
+        int orderPrice = 10000;
         int count = 1;
 
         //when
         Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
         orderService.cancelOrder(orderId);
         Order order = orderRepository.findOne(orderId);
-        Item item = itemRepository.findOne(1L);
+        Item item = itemRepository.findOne(2L);
 
 
         //then
         assertEquals("주문 취소시 상태는 CANCEL 이다. ", OrderStatus.CANCEL, order.getStatus());
-        assertEquals("주문이 취소된 상품은 그만큼 재고가 증가해야 한다.", 100, item.getStockQuantity());
+        assertEquals("주문이 취소된 상품은 그만큼 재고가 증가해야 한다.", 10, item.getStockQuantity());
     }
 
     @Test
+    @Transactional
     public void 주문취소는_한번만보장() throws Exception {
         //given
         Long memberId = 100L;
-        Long itemId = 1L;
+        Long itemId = 2L;
         Address address = new Address("서울시" ,"1번가", "205-106");
-        int orderPrice = 3400000;
+        int orderPrice = 10000;
         int count = 1;
 
         //when
@@ -160,12 +165,13 @@ public class OrderServiceTest {
 
 
     @Test
+    @Transactional
     public void 주문내역조회() throws Exception {
         //given
-        Long memberId = 100L;
-        Long itemId = 1L;
+        Long memberId = 110L;
+        Long itemId = 2L;
         Address address = new Address("서울시" ,"1번가", "205-106");
-        int orderPrice = 3400000;
+        int orderPrice = 10000;
         int count = 1;
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         LocalDateTime startDate =  LocalDateTime.parse("2010-08-15T00:00:00", formatter);

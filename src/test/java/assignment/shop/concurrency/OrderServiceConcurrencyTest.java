@@ -33,6 +33,7 @@ public class OrderServiceConcurrencyTest {
     ItemRepository itemRepository;
 
     @Test
+    @Transactional
     public void 재고가_100개_있는상품을_동시에_10개씩_80번이상주문하면_10개의주문만_성공되어야한다() throws Exception {
         //given
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
