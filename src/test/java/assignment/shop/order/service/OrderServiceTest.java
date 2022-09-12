@@ -1,5 +1,6 @@
 package assignment.shop.order.service;
 
+import assignment.shop.exception.NoSuchEntityException;
 import assignment.shop.order.Address;
 import assignment.shop.item.Item;
 import assignment.shop.order.Order;
@@ -13,9 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -25,7 +23,7 @@ import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @WebAppConfiguration
 @SpringBootTest
-@Transactional
+@Transactional(readOnly = true)
 public class OrderServiceTest {
 
     @Autowired
@@ -50,7 +48,7 @@ public class OrderServiceTest {
         Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
 
         //then
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId).get();
 
         assertEquals("상품 주문시 상태는 ORDER", OrderStatus.ORDER, order.getStatus());
         assertEquals("주문한 상품 종류 수가 정확해야 한다", 1, order.getOrderItems().size());
@@ -134,7 +132,7 @@ public class OrderServiceTest {
         //when
         Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
         orderService.cancelOrder(orderId);
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId).get();
         Item item = itemRepository.findOne(2L);
 
 
@@ -165,7 +163,6 @@ public class OrderServiceTest {
 
 
     @Test
-    @Transactional
     public void 주문내역조회() throws Exception {
         //given
         Long memberId = 110L;
@@ -183,6 +180,20 @@ public class OrderServiceTest {
 
         //then
         assertEquals("주문내역을 조회할 수 있다.", orders.size(), 1);
+    }
+
+    @Test
+    public void 없는_주문번호_요청시_오류메시지() throws Exception {
+        //given
+        Long orderId = 1000000L;
+
+        //when
+        //Order order = orderService.findOne(orderId);
+
+        //then
+        assertThrows(NoSuchEntityException.class, ()->{
+            orderService.findOne(orderId);
+        });
     }
 
 }

@@ -60,7 +60,7 @@ public class OrderServiceConcurrencyTest {
         }
         countDownLatch.await(); //Latch가 0이될때까지 기다린다.
         //when
-        List<Order> orders = orderRepository.findUserOrders(100L, startDate, endDate);
+        List<Order> orders = orderRepository.findUserOrders(startDate, endDate, 100L);
 
         //then
         assertEquals("주문이 10개만 성립되어야한다.",orders.size(), 10);

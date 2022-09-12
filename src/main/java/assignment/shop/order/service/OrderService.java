@@ -1,6 +1,8 @@
 package assignment.shop.order.service;
 
 import assignment.shop.exception.ApiException;
+import assignment.shop.exception.ErrorCode;
+import assignment.shop.exception.NoSuchEntityException;
 import assignment.shop.item.Item;
 import assignment.shop.order.Address;
 import assignment.shop.order.Order;
@@ -52,7 +54,8 @@ public class OrderService {
     @Transactional
     public void cancelOrder(Long orderId){
         //주문 조회
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new NoSuchEntityException(ErrorCode.NOT_FOUND_ORDER));
         if(order.getStatus() == OrderStatus.CANCEL){
             throw new ApiException(HttpStatus.BAD_REQUEST, "400", "이미 취소한 주문입니다.");
         }
@@ -64,7 +67,7 @@ public class OrderService {
      * 주문내역 기간으로조회
      */
     public List<Order> findUserOrders(Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
-        List<Order> orders = orderRepository.findUserOrders(memberId,startDate,endDate);
+        List<Order> orders = orderRepository.findUserOrders(startDate,endDate, memberId);
         return orders;
     }
 
@@ -72,7 +75,8 @@ public class OrderService {
      * 주문내역 조회
      */
     public Order findOne(Long orderId) {
-        Order order = orderRepository.findOne(orderId);
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new NoSuchEntityException(ErrorCode.NOT_FOUND_ORDER));
         return order;
     }
 }
