@@ -79,12 +79,12 @@ public class OrderController {
      * @return
      */
     @GetMapping("/orders")
-    public ResultDto getOrders(@RequestParam("memeber_id)") Long memberId,
+    public ResultDto getOrders(@RequestParam("member_id") Long memberId,
                                @RequestParam("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                @RequestParam("end_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
     )  {
 
-        //TODO: 주문취소내역도 같이보여줘야하는지
+        //TODO: 주문취소내역도 같이보여줘야하는
         List<Order> orders = orderService.findUserOrders(memberId, startDate, endDate);
         List<GetOrdersResDto> result = orders.stream()
                 .map(o -> new GetOrdersResDto(o))
