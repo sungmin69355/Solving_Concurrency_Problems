@@ -1,5 +1,6 @@
 package assignment.shop.order;
 
+import assignment.shop.common.commonEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 @Audited
 @Getter @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Order {
+public class Order extends commonEntity {
     @Id
     @GeneratedValue
     @Column(name = "order_id")

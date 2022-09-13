@@ -1,5 +1,6 @@
 package assignment.shop.item;
 
+import assignment.shop.common.commonEntity;
 import assignment.shop.exception.ApiException;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter @Setter
 @Audited
-public class Item {
+public class Item extends commonEntity {
     @Id
     @GeneratedValue
     @Column(name = "item_id")
