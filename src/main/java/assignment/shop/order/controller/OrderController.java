@@ -21,6 +21,8 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class OrderController {
 
+    private static final String USER_ID_HEADER = "x-user-id";
+
     private final OrderService orderService;
 
     /**
@@ -29,9 +31,9 @@ public class OrderController {
      * @return ResultDto
      */
     @PostMapping("/orders")
-    public ResultDto createOrder(@RequestHeader(name = "x-user-id") String user,
+    public ResultDto createOrder(@RequestHeader(USER_ID_HEADER) String memberId,
                                  @Valid @RequestBody CreateOrderReqDto createOrderReqDto) {
-        if(!user.equals("greatepeople")){
+        if(!memberId.equals("greatepeople")){
             return new ResultDto("401", "올바르지 않은 유저입니다.");
         } else {
             //임의의 유저
@@ -50,10 +52,10 @@ public class OrderController {
      * @return ResultDto
      */
     @PostMapping("/orders/cancel")
-    public ResultDto cancelOrder(@RequestHeader(name = "x-user-id") String user,
+    public ResultDto cancelOrder(@RequestHeader(USER_ID_HEADER) String memberId,
                                  @Valid @RequestBody CancelOrderReqDto cancelOrderReqDto){
 
-        if(!user.equals("greatepeople")) {
+        if(!memberId.equals("greatepeople")) {
             return new ResultDto("401", "올바르지 않은 유저입니다.");
         }
 
@@ -79,7 +81,7 @@ public class OrderController {
      * @return
      */
     @GetMapping("/orders")
-    public ResultDto getOrders(@RequestParam("member_id") Long memberId,
+    public ResultDto getOrders(@RequestHeader(USER_ID_HEADER) Long memberId,
                                @RequestParam("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                @RequestParam("end_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
     )  {
