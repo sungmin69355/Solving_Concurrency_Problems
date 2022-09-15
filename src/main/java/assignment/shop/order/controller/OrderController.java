@@ -66,8 +66,6 @@ public class OrderController {
             return new ResultDto("400", "주문내역이 없습니다.");
         } else if(order.getTotalPrice() != cancelOrderReqDto.getCancelPrice()) {
             return new ResultDto("400", "취소금액이 맞지않습니다.");
-        } else if(order.getStatus().equals(OrderStatus.CANCEL)){
-            return new ResultDto("400", "이미 취소한 주문입니다.");
         }
 
         orderService.cancelOrder(cancelOrderReqDto.getOrderId());

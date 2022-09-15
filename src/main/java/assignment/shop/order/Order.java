@@ -1,6 +1,8 @@
 package assignment.shop.order;
 
 import assignment.shop.common.commonEntity;
+import assignment.shop.exception.ErrorCode;
+import assignment.shop.exception.OrderException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,6 +62,8 @@ public class Order extends commonEntity {
      * 주문 취소
      */
     public void cancel(){
+        checkStatus();
+
         this.setStatus(OrderStatus.CANCEL);
         for(OrderItem orderItem: orderItems){
             orderItem.cencel();
@@ -75,6 +79,11 @@ public class Order extends commonEntity {
                 .sum();
     }
 
+    private void checkStatus() {
+        if (status == OrderStatus.CANCEL) {
+            throw new OrderException(ErrorCode.NOT_AVAILABLE_CANCEL);
+        }
+    }
 
 
 }

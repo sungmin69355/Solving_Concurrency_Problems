@@ -56,9 +56,6 @@ public class OrderService {
         //주문 조회
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchEntityException(ErrorCode.NOT_FOUND_ORDER));
-        if(order.getStatus() == OrderStatus.CANCEL){
-            throw new ApiException(HttpStatus.BAD_REQUEST, "400", "이미 취소한 주문입니다.");
-        }
         //주문 취소
         order.cancel();
     }
