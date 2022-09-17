@@ -1,6 +1,8 @@
 package assignment.shop.order.service;
 
+import assignment.shop.exception.ItemException;
 import assignment.shop.exception.NoSuchEntityException;
+import assignment.shop.exception.OrderException;
 import assignment.shop.order.Address;
 import assignment.shop.item.Item;
 import assignment.shop.order.Order;
@@ -60,13 +62,13 @@ public class OrderServiceTest {
     public void 상품주문_재고수량초과() throws Exception {
         //given
         Long memberId = 100L;
-        Long itemId = 1L;
+        Long itemId = 2L;
         Address address = new Address("서울시" ,"1번가", "205-106");
-        int orderPrice = 3400000;
+        int orderPrice = 10000;
         int count = 110;
 
         //then
-        assertThrows(ApiException.class, ()->{
+        assertThrows(ItemException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }
@@ -76,13 +78,13 @@ public class OrderServiceTest {
     public void 상품주문_가격부족() throws Exception {
         //given
         Long memberId = 100L;
-        Long itemId = 1L;
+        Long itemId = 2L;
         Address address = new Address("서울시" ,"1번가", "205-106");
         int orderPrice = 34000;
         int count = 100;
 
         //then
-        assertThrows(ApiException.class, ()->{
+        assertThrows(ItemException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }
@@ -156,7 +158,7 @@ public class OrderServiceTest {
         orderService.cancelOrder(orderId);
 
         //then
-        assertThrows(ApiException.class, ()->{
+        assertThrows(OrderException.class, ()->{
             orderService.cancelOrder(orderId);
         });
     }
@@ -165,7 +167,7 @@ public class OrderServiceTest {
     @Test
     public void 주문내역조회() throws Exception {
         //given
-        Long memberId = 110L;
+        Long memberId = 1100L;
         Long itemId = 2L;
         Address address = new Address("서울시" ,"1번가", "205-106");
         int orderPrice = 10000;
