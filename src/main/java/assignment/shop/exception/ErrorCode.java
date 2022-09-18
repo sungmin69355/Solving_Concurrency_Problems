@@ -19,7 +19,8 @@ public enum ErrorCode {
     NOT_FOUND_ORDER("O001","해당 주문을 찾을 수 없습니다.", 400),
     NOT_AVAILABLE_CANCEL("O001", "이미 취소가 완료된 주문입니다.", 400),
 
-    INVALID_INPUT_VALUE("C001", "요청이 올바르지 않습니다", 400);
+    INVALID_INPUT_VALUE("C001", "요청이 올바르지 않습니다", 400),
+    INVALID_USER("C002", "올바르지않은 유저입니다.", 400);
 
     private final String code;
     private final String message;

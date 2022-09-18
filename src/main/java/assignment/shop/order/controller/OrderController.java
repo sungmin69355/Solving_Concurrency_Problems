@@ -1,5 +1,7 @@
 package assignment.shop.order.controller;
 
+import assignment.shop.exception.ErrorCode;
+import assignment.shop.exception.OrderException;
 import assignment.shop.order.Order;
 import assignment.shop.order.OrderStatus;
 import assignment.shop.order.dto.CancelOrderReqDto;
@@ -34,7 +36,7 @@ public class OrderController {
     public ResultDto createOrder(@RequestHeader(USER_ID_HEADER) String memberId,
                                  @Valid @RequestBody CreateOrderReqDto createOrderReqDto) {
         if(!memberId.equals("greatepeople")){
-            return new ResultDto("401", "올바르지 않은 유저입니다.");
+            throw  new OrderException(ErrorCode.INVALID_USER);
         } else {
             //임의의 유저
             createOrderReqDto.setMemberId(1L);
@@ -56,16 +58,16 @@ public class OrderController {
                                  @Valid @RequestBody CancelOrderReqDto cancelOrderReqDto){
 
         if(!memberId.equals("greatepeople")) {
-            return new ResultDto("401", "올바르지 않은 유저입니다.");
+            throw  new OrderException(ErrorCode.INVALID_USER);
         }
 
         //TODO : 주문한사람과 취소한사람이 같은지 검증필요
         Order order = orderService.findOne(cancelOrderReqDto.getOrderId());
 
         if(order == null){
-            return new ResultDto("400", "주문내역이 없습니다.");
+            throw  new OrderException(ErrorCode.NOT_FOUND_ORDER);
         } else if(order.getTotalPrice() != cancelOrderReqDto.getCancelPrice()) {
-            return new ResultDto("400", "취소금액이 맞지않습니다.");
+            throw new OrderException(ErrorCode.CHECK_THE_ORDER_QUANTITY_PRICE);
         }
 
         orderService.cancelOrder(cancelOrderReqDto.getOrderId());
