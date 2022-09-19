@@ -100,7 +100,7 @@ public class OrderServiceTest {
         int count = 100;
 
         //then
-        assertThrows(ApiException.class, ()->{
+        assertThrows(OrderException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }
@@ -116,7 +116,7 @@ public class OrderServiceTest {
         int count = 100;
 
         //then
-        assertThrows(ApiException.class, ()->{
+        assertThrows(OrderException.class, ()->{
             orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
         });
     }

@@ -1,13 +1,13 @@
 package assignment.shop.order;
 
+import assignment.shop.exception.ErrorCode;
+import assignment.shop.exception.OrderException;
 import assignment.shop.item.Item;
 import assignment.shop.item.ItemStatus;
-import assignment.shop.exception.ApiException;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
-import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
 
@@ -40,7 +40,7 @@ public class OrderItem {
         orderItem.setOrderPrice(orderPrice);
         orderItem.setCount(count);
         if(item.getStatus() == ItemStatus.SOLDOUT){
-            throw new ApiException(HttpStatus.ACCEPTED, "202", "판매가 중단된 제품입니다.");
+            throw new OrderException(ErrorCode.SUSPENDED_PRODUCT);
         }
         item.TotalPriceValidation(count, orderPrice); //가격검증
         item.removeStock(count); //아이템의 재고를 줄여준다.
