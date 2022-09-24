@@ -18,9 +18,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findUserOrders(LocalDateTime startDate, LocalDateTime endDate, Long memberId);
 
     @Query(value = "select distinct o from Order o " +
-            " inner join o.orderItems oi " +
-            " inner join oi.item i " +
+            " join fetch o.orderItems oi " +
+            " join fetch oi.item i " +
             "where o.memberId = :memberId " +
-            "and o.createdDate between :startDate and :endDate")
+            "and o.createdDate between :startDate and :endDate", countQuery = "select count(o) from Order o")
     Page<Order> findByUserIdAndDateCondition(Long memberId, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable);
 }
