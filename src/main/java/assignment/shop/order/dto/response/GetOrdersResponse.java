@@ -1,11 +1,11 @@
-package assignment.shop.order.dto;
+package assignment.shop.order.dto.response;
 
 import assignment.shop.order.Address;
 import assignment.shop.order.Order;
 import lombok.Data;
 
 @Data
-public class GetOrdersResDto {
+public class GetOrdersResponse {
     private Long orderId;
     private String itemName;
     private int itemPrice;
@@ -13,7 +13,7 @@ public class GetOrdersResDto {
     private int orderPrice;
     private int orderCount;
 
-    public GetOrdersResDto(Order order) {
+    public GetOrdersResponse(Order order) {
         orderId = order.getId();
         itemName = order.getOrderItems().get(0).getItem().getName();
         itemPrice = order.getOrderItems().get(0).getItem().getPrice();

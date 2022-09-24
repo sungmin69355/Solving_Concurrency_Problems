@@ -3,12 +3,16 @@ package assignment.shop.order.controller;
 import assignment.shop.exception.ErrorCode;
 import assignment.shop.exception.OrderException;
 import assignment.shop.order.Order;
-import assignment.shop.order.dto.CancelOrderReqDto;
-import assignment.shop.order.dto.CreateOrderReqDto;
-import assignment.shop.order.dto.GetOrdersResDto;
+import assignment.shop.order.dto.request.CancelOrderReqDto;
+import assignment.shop.order.dto.request.CreateOrderReqDto;
+import assignment.shop.order.dto.response.GetOrdersResponse;
 import assignment.shop.order.dto.ResultDto;
+import assignment.shop.order.dto.response.OrderHistoryResponse;
 import assignment.shop.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +23,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
+@RequestMapping("/api/orders")
 @RequiredArgsConstructor
 public class OrderController {
 
@@ -31,7 +36,7 @@ public class OrderController {
      * @param createOrderReqDto
      * @return ResultDto
      */
-    @PostMapping("/orders")
+    @PostMapping
     public ResultDto createOrder(@RequestHeader(USER_ID_HEADER) String memberId,
                                  @Valid @RequestBody CreateOrderReqDto createOrderReqDto) {
         if(!memberId.equals("greatepeople")){
@@ -52,7 +57,7 @@ public class OrderController {
      * @param cancelOrderReqDto
      * @return ResultDto
      */
-    @PostMapping("/orders/cancel")
+    @PostMapping("/cancel")
     public ResultDto cancelOrder(@RequestHeader(USER_ID_HEADER) String memberId,
                                  @Valid @RequestBody CancelOrderReqDto cancelOrderReqDto){
 
@@ -79,7 +84,7 @@ public class OrderController {
      * @param
      * @return
      */
-    @GetMapping("/orders")
+    @GetMapping
     public ResultDto getOrders(@RequestHeader(USER_ID_HEADER) Long memberId,
                                @RequestParam("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                @RequestParam("end_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
@@ -87,11 +92,30 @@ public class OrderController {
 
         //TODO: 주문취소내역도 같이보여줘야하는
         List<Order> orders = orderService.findUserOrders(memberId, startDate, endDate);
-        List<GetOrdersResDto> result = orders.stream()
-                .map(o -> new GetOrdersResDto(o))
+        List<GetOrdersResponse> result = orders.stream()
+                .map(o -> new GetOrdersResponse(o))
                 .collect(toList());
 
         return new ResultDto("200", result);
+    }
+
+    /**
+     * 유저 주문내역 조회[페이징] API
+     * @param memberId
+     * @param startDate
+     * @param endDate
+     * @param pageable
+     * @return
+     */
+    @GetMapping("/history")
+    public Page<OrderHistoryResponse> getOrderHistory(@RequestHeader(USER_ID_HEADER) Long memberId,
+                                                      @RequestParam("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+                                                      @RequestParam("end_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+                                                      @PageableDefault(size = 5) Pageable pageable) {
+        if (startDate.isAfter(endDate)) {
+            throw new OrderException(ErrorCode.INVALID_INPUT_VALUE);
+        }
+        return orderService.getOrderHistory(memberId, startDate, endDate, pageable);
     }
 
 }

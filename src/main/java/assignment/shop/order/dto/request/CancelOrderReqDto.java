@@ -1,4 +1,4 @@
-package assignment.shop.order.dto;
+package assignment.shop.order.dto.request;
 
 import lombok.Data;
 

@@ -8,8 +8,11 @@ import assignment.shop.order.Address;
 import assignment.shop.order.Order;
 import assignment.shop.order.OrderItem;
 import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.dto.response.OrderHistoryResponse;
 import assignment.shop.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,5 +76,13 @@ public class OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchEntityException(ErrorCode.NOT_FOUND_ORDER));
         return order;
+    }
+
+    /**
+     *  유저의 주문내역 조회 페이징 처리
+     */
+    public Page<OrderHistoryResponse> getOrderHistory(Long memberId, LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
+        Page<Order> orders = orderRepository.findByUserIdAndDateCondition(memberId, startDate, endDate, pageable);
+        return orders.map(OrderHistoryResponse::from);
     }
 }
