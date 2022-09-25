@@ -4,16 +4,19 @@ import assignment.shop.exception.ErrorCode;
 import assignment.shop.exception.OrderException;
 import assignment.shop.order.Order;
 import assignment.shop.order.dto.request.CancelOrderReqDto;
-import assignment.shop.order.dto.request.CreateOrderReqDto;
+import assignment.shop.order.dto.request.CreateOrderRequest;
 import assignment.shop.order.dto.response.GetOrdersResponse;
 import assignment.shop.order.dto.ResultDto;
 import assignment.shop.order.dto.response.OrderHistoryResponse;
+import assignment.shop.order.dto.response.OrderResponse;
 import assignment.shop.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,23 +36,22 @@ public class OrderController {
 
     /**
      * 주문요청 API
-     * @param createOrderReqDto
+     * @param createOrderRequest
      * @return ResultDto
      */
     @PostMapping
-    public ResultDto createOrder(@RequestHeader(USER_ID_HEADER) String memberId,
-                                 @Valid @RequestBody CreateOrderReqDto createOrderReqDto) {
+    public ResponseEntity<OrderResponse> createOrder(@RequestHeader(USER_ID_HEADER) String memberId,
+                                                     @Valid @RequestBody CreateOrderRequest createOrderRequest) {
         if(!memberId.equals("greatepeople")){
             throw new OrderException(ErrorCode.INVALID_USER);
         } else {
             //임의의 유저
-            createOrderReqDto.setMemberId(1L);
+            createOrderRequest.setMemberId(1L);
         }
 
-        Long orderId = orderService.order(createOrderReqDto.getMemberId(), createOrderReqDto.getItemId(),
-                createOrderReqDto.getOrderPrice(), createOrderReqDto.getAddress(), createOrderReqDto.getCount());
+        OrderResponse response = orderService.order(createOrderRequest);
 
-        return new ResultDto("200", orderId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     /**

@@ -9,7 +9,7 @@ import javax.validation.constraints.Positive;
 
 @Data
 @AllArgsConstructor
-public class CreateOrderReqDto {
+public class CreateOrderRequest {
 
     private Long memberId;
     @NotNull

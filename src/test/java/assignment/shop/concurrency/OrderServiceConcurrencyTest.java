@@ -4,6 +4,7 @@ package assignment.shop.concurrency;
 import assignment.shop.order.Address;
 import assignment.shop.order.Order;
 import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.dto.request.CreateOrderRequest;
 import assignment.shop.order.repository.OrderRepository;
 import assignment.shop.order.service.OrderService;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,7 @@ public class OrderServiceConcurrencyTest {
         Address address = new Address("서울시" ,"100길", "205-106");
         int orderPrice = 34000000;
         int count = 10;
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
 
         int threadCount = 100;
         ExecutorService executorService = Executors.newFixedThreadPool(32); //고정된 쓰레드 풀 생성
@@ -52,7 +54,7 @@ public class OrderServiceConcurrencyTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(()->{
                 try {
-                    orderService.order(memberId, itemId, orderPrice, address, count);
+                    orderService.order(createOrderRequest);
                 } finally {
                     countDownLatch.countDown(); //Latch가 1개씩 감소된다.
                 }

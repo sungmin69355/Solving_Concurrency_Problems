@@ -9,6 +9,8 @@ import assignment.shop.order.Order;
 import assignment.shop.order.OrderStatus;
 import assignment.shop.exception.ApiException;
 import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.dto.request.CreateOrderRequest;
+import assignment.shop.order.dto.response.OrderResponse;
 import assignment.shop.order.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +48,13 @@ public class OrderServiceTest {
         int orderPrice = 10000;
         int count = 1;
 
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
+
         //when
-        Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
+        OrderResponse orders = orderService.order(createOrderRequest);
 
         //then
-        Order order = orderRepository.findById(orderId).get();
+        Order order = orderRepository.findById(orders.getOrderId()).get();
 
         assertEquals("상품 주문시 상태는 ORDER", OrderStatus.ORDER, order.getStatus());
         assertEquals("주문한 상품 종류 수가 정확해야 한다", 1, order.getOrderItems().size());
@@ -67,9 +71,11 @@ public class OrderServiceTest {
         int orderPrice = 10000;
         int count = 110;
 
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
+
         //then
         assertThrows(ItemException.class, ()->{
-            orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
+            orderService.order(createOrderRequest);//예외가 발생해야 한다.
         });
     }
 
@@ -83,9 +89,12 @@ public class OrderServiceTest {
         int orderPrice = 34000;
         int count = 100;
 
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
+
+
         //then
         assertThrows(ItemException.class, ()->{
-            orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
+            orderService.order(createOrderRequest);//예외가 발생해야 한다.
         });
     }
 
@@ -99,9 +108,11 @@ public class OrderServiceTest {
         int orderPrice = 34000;
         int count = 100;
 
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
+
         //then
         assertThrows(OrderException.class, ()->{
-            orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
+            orderService.order(createOrderRequest);//예외가 발생해야 한다.
         });
     }
 
@@ -115,9 +126,12 @@ public class OrderServiceTest {
         int orderPrice = 34000;
         int count = 100;
 
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
+
+
         //then
         assertThrows(OrderException.class, ()->{
-            orderService.order(memberId, itemId, orderPrice, address, count);//예외가 발생해야 한다.
+            orderService.order(createOrderRequest);//예외가 발생해야 한다.
         });
     }
 
@@ -131,10 +145,12 @@ public class OrderServiceTest {
         int orderPrice = 10000;
         int count = 1;
 
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
+
         //when
-        Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
-        orderService.cancelOrder(orderId);
-        Order order = orderRepository.findById(orderId).get();
+        OrderResponse createOrder = orderService.order(createOrderRequest);
+        orderService.cancelOrder(createOrder.getOrderId());
+        Order order = orderRepository.findById(createOrder.getOrderId()).get();
         Item item = itemRepository.findOne(2L);
 
 
@@ -153,13 +169,15 @@ public class OrderServiceTest {
         int orderPrice = 10000;
         int count = 1;
 
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
+
         //when
-        Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
-        orderService.cancelOrder(orderId);
+        OrderResponse order = orderService.order(createOrderRequest);
+        orderService.cancelOrder(order.getOrderId());
 
         //then
         assertThrows(OrderException.class, ()->{
-            orderService.cancelOrder(orderId);
+            orderService.cancelOrder(order.getOrderId());
         });
     }
 
@@ -176,8 +194,10 @@ public class OrderServiceTest {
         LocalDateTime startDate =  LocalDateTime.parse("2010-08-15T00:00:00", formatter);
         LocalDateTime endDate =  LocalDateTime.parse("2050-08-15T00:00:00", formatter);
 
+        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
+
         //when
-        Long orderId = orderService.order(memberId, itemId, orderPrice, address, count);
+        OrderResponse createOrder = orderService.order(createOrderRequest);
         List<Order> orders =  orderService.findUserOrders(memberId, startDate, endDate);
 
         //then

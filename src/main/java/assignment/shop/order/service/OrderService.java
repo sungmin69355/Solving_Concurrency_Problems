@@ -8,7 +8,9 @@ import assignment.shop.order.Address;
 import assignment.shop.order.Order;
 import assignment.shop.order.OrderItem;
 import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.dto.request.CreateOrderRequest;
 import assignment.shop.order.dto.response.OrderHistoryResponse;
+import assignment.shop.order.dto.response.OrderResponse;
 import assignment.shop.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,24 +31,25 @@ public class OrderService {
 
     /**
      *  상품 주문
+     * @return
      */
     @Transactional
-    public Long order(Long memberId, Long itemId, int orderPrice , Address address, int count){
+    public OrderResponse order(CreateOrderRequest createOrderRequest){
         //상품 조회
-        Item item = itemRepository.findOne(itemId);
+        Item item = itemRepository.findOne(createOrderRequest.getItemId());
 
         if(item == null){
             throw new OrderException(ErrorCode.NO_SEARCHING_ITEM);
         }
 
         //주문상품 생성
-        OrderItem orderItem = OrderItem.createOrderItem(item, orderPrice, count);
+        OrderItem orderItem = OrderItem.createOrderItem(item, createOrderRequest.getOrderPrice(), createOrderRequest.getCount());
 
         //주문 생성
-        Order order = Order.createOrder(memberId, address, orderItem);
+        Order order = Order.createOrder(createOrderRequest.getMemberId(), createOrderRequest.getAddress(), orderItem);
 
         orderRepository.save(order);
-        return order.getId();
+        return OrderResponse.from(order.getId());
     }
 
     /**
