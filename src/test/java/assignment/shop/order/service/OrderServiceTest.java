@@ -10,6 +10,7 @@ import assignment.shop.order.OrderStatus;
 import assignment.shop.exception.ApiException;
 import assignment.shop.item.repository.ItemRepository;
 import assignment.shop.order.dto.request.CreateOrderRequest;
+import assignment.shop.order.dto.response.GetOrdersResponse;
 import assignment.shop.order.dto.response.OrderResponse;
 import assignment.shop.order.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
@@ -198,7 +199,7 @@ public class OrderServiceTest {
 
         //when
         OrderResponse createOrder = orderService.order(createOrderRequest);
-        List<Order> orders =  orderService.findUserOrders(memberId, startDate, endDate);
+        List<GetOrdersResponse> orders =  orderService.findUserOrders(memberId, startDate, endDate);
 
         //then
         assertEquals("주문내역을 조회할 수 있다.", orders.size(), 1);

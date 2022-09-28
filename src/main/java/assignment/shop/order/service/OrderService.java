@@ -9,6 +9,7 @@ import assignment.shop.order.Order;
 import assignment.shop.order.OrderItem;
 import assignment.shop.item.repository.ItemRepository;
 import assignment.shop.order.dto.request.CreateOrderRequest;
+import assignment.shop.order.dto.response.GetOrdersResponse;
 import assignment.shop.order.dto.response.OrderHistoryResponse;
 import assignment.shop.order.dto.response.OrderResponse;
 import assignment.shop.order.repository.OrderRepository;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional(readOnly = true)
@@ -67,9 +70,12 @@ public class OrderService {
     /**
      * 주문내역 기간으로조회
      */
-    public List<Order> findUserOrders(Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<GetOrdersResponse> findUserOrders(Long memberId, LocalDateTime startDate, LocalDateTime endDate) {
         List<Order> orders = orderRepository.findUserOrders(startDate,endDate, memberId);
-        return orders;
+        List<GetOrdersResponse> result = orders.stream()
+                .map(o -> new GetOrdersResponse(o))
+                .collect(toList());
+        return result;
     }
 
     /**

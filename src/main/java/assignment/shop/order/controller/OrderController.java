@@ -91,14 +91,9 @@ public class OrderController {
                                @RequestParam("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                @RequestParam("end_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
     )  {
-
         //TODO: 주문취소내역도 같이보여줘야하는
-        List<Order> orders = orderService.findUserOrders(memberId, startDate, endDate);
-        List<GetOrdersResponse> result = orders.stream()
-                .map(o -> new GetOrdersResponse(o))
-                .collect(toList());
-
-        return new ResultDto("200", result);
+        List<GetOrdersResponse> orders = orderService.findUserOrders(memberId, startDate, endDate);
+        return new ResultDto("200", orders);
     }
 
     /**
