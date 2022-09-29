@@ -59,12 +59,13 @@ public class OrderService {
      * 주문 취소
      */
     @Transactional
-    public void cancelOrder(Long orderId){
+    public OrderResponse cancelOrder(Long orderId){
         //주문 조회
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchEntityException(ErrorCode.NOT_FOUND_ORDER));
         //주문 취소
         order.cancel();
+        return OrderResponse.from(order.getId());
     }
 
     /**

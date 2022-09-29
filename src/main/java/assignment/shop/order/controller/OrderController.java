@@ -60,7 +60,7 @@ public class OrderController {
      * @return ResultDto
      */
     @PostMapping("/cancel")
-    public ResultDto cancelOrder(@RequestHeader(USER_ID_HEADER) String memberId,
+    public ResponseEntity<OrderResponse> cancelOrder(@RequestHeader(USER_ID_HEADER) String memberId,
                                  @Valid @RequestBody CancelOrderReqDto cancelOrderReqDto){
 
         if(!memberId.equals("greatepeople")) {
@@ -76,9 +76,9 @@ public class OrderController {
             throw new OrderException(ErrorCode.CHECK_THE_ORDER_QUANTITY_PRICE);
         }
 
-        orderService.cancelOrder(cancelOrderReqDto.getOrderId());
+        OrderResponse orderResponse = orderService.cancelOrder(cancelOrderReqDto.getOrderId());
 
-        return new ResultDto("200", "주문취소가 완료되었습니다.");
+        return ResponseEntity.ok(orderResponse);
     }
 
     /**
