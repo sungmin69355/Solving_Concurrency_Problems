@@ -5,8 +5,6 @@ import assignment.shop.exception.OrderException;
 import assignment.shop.order.Order;
 import assignment.shop.order.dto.request.CancelOrderReqDto;
 import assignment.shop.order.dto.request.CreateOrderRequest;
-import assignment.shop.order.dto.response.GetOrdersResponse;
-import assignment.shop.order.dto.ResultDto;
 import assignment.shop.order.dto.response.OrderHistoryResponse;
 import assignment.shop.order.dto.response.OrderResponse;
 import assignment.shop.order.service.OrderService;
@@ -21,9 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -82,21 +77,6 @@ public class OrderController {
     }
 
     /**
-     * 주문 내역 조회 API
-     * @param
-     * @return
-     */
-    @GetMapping
-    public ResultDto getOrders(@RequestHeader(USER_ID_HEADER) Long memberId,
-                               @RequestParam("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-                               @RequestParam("end_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate
-    )  {
-        //TODO: 주문취소내역도 같이보여줘야하는
-        List<GetOrdersResponse> orders = orderService.findUserOrders(memberId, startDate, endDate);
-        return new ResultDto("200", orders);
-    }
-
-    /**
      * 유저 주문내역 조회[페이징] API
      * @param memberId
      * @param startDate
@@ -104,7 +84,7 @@ public class OrderController {
      * @param pageable
      * @return
      */
-    @GetMapping("/history")
+    @GetMapping
     public Page<OrderHistoryResponse> getOrderHistory(@RequestHeader(USER_ID_HEADER) Long memberId,
                                                       @RequestParam("start_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                                       @RequestParam("end_date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,

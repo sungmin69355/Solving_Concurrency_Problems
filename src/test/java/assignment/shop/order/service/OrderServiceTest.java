@@ -7,10 +7,8 @@ import assignment.shop.order.Address;
 import assignment.shop.item.Item;
 import assignment.shop.order.Order;
 import assignment.shop.order.OrderStatus;
-import assignment.shop.exception.ApiException;
 import assignment.shop.item.repository.ItemRepository;
 import assignment.shop.order.dto.request.CreateOrderRequest;
-import assignment.shop.order.dto.response.GetOrdersResponse;
 import assignment.shop.order.dto.response.OrderResponse;
 import assignment.shop.order.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
@@ -18,10 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
@@ -180,29 +174,6 @@ public class OrderServiceTest {
         assertThrows(OrderException.class, ()->{
             orderService.cancelOrder(order.getOrderId());
         });
-    }
-
-
-    @Test
-    public void 주문내역조회() throws Exception {
-        //given
-        Long memberId = 1100L;
-        Long itemId = 2L;
-        Address address = new Address("서울시" ,"1번가", "205-106");
-        int orderPrice = 10000;
-        int count = 1;
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-        LocalDateTime startDate =  LocalDateTime.parse("2010-08-15T00:00:00", formatter);
-        LocalDateTime endDate =  LocalDateTime.parse("2050-08-15T00:00:00", formatter);
-
-        CreateOrderRequest createOrderRequest = new CreateOrderRequest(memberId, itemId, orderPrice, address, count);
-
-        //when
-        OrderResponse createOrder = orderService.order(createOrderRequest);
-        List<GetOrdersResponse> orders =  orderService.findUserOrders(memberId, startDate, endDate);
-
-        //then
-        assertEquals("주문내역을 조회할 수 있다.", orders.size(), 1);
     }
 
     @Test
