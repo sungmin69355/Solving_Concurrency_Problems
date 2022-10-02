@@ -8,6 +8,7 @@ import assignment.shop.item.Item;
 import assignment.shop.order.Order;
 import assignment.shop.order.OrderStatus;
 import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.dto.request.CancelOrderReqDto;
 import assignment.shop.order.dto.request.CreateOrderRequest;
 import assignment.shop.order.dto.response.OrderResponse;
 import assignment.shop.order.repository.OrderRepository;
@@ -180,13 +181,14 @@ public class OrderServiceTest {
     public void 없는_주문번호_요청시_오류메시지() throws Exception {
         //given
         Long orderId = 1000000L;
+        CancelOrderReqDto cancelOrderReqDto = new CancelOrderReqDto();
 
         //when
         //Order order = orderService.findOne(orderId);
 
         //then
         assertThrows(NoSuchEntityException.class, ()->{
-            orderService.findOne(orderId);
+            orderService.findOne(orderId, cancelOrderReqDto);
         });
     }
 

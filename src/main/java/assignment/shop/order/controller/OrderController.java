@@ -32,7 +32,7 @@ public class OrderController {
     /**
      * 주문요청 API
      * @param createOrderRequest
-     * @return ResultDto
+     * @return ResponseEntity<OrderResponse>
      */
     @PostMapping
     public ResponseEntity<OrderResponse> createOrder(@RequestHeader(USER_ID_HEADER) String memberId,
@@ -52,7 +52,7 @@ public class OrderController {
     /**
      * 주문취소요청 API
      * @param cancelOrderReqDto
-     * @return ResultDto
+     * @return ResponseEntity<OrderResponse>
      */
     @PostMapping("/cancel")
     public ResponseEntity<OrderResponse> cancelOrder(@RequestHeader(USER_ID_HEADER) String memberId,
@@ -63,13 +63,7 @@ public class OrderController {
         }
 
         //TODO : 주문한사람과 취소한사람이 같은지 검증필요
-        Order order = orderService.findOne(cancelOrderReqDto.getOrderId());
-
-        if(order == null){
-            throw new OrderException(ErrorCode.NOT_FOUND_ORDER);
-        } else if(order.getTotalPrice() != cancelOrderReqDto.getCancelPrice()) {
-            throw new OrderException(ErrorCode.CHECK_THE_ORDER_QUANTITY_PRICE);
-        }
+        Order order = orderService.findOne(cancelOrderReqDto.getOrderId(), cancelOrderReqDto);
 
         OrderResponse orderResponse = orderService.cancelOrder(cancelOrderReqDto.getOrderId());
 
@@ -82,7 +76,7 @@ public class OrderController {
      * @param startDate
      * @param endDate
      * @param pageable
-     * @return
+     * @return Page<OrderHistoryResponse>
      */
     @GetMapping
     public Page<OrderHistoryResponse> getOrderHistory(@RequestHeader(USER_ID_HEADER) Long memberId,

@@ -7,6 +7,7 @@ import assignment.shop.item.Item;
 import assignment.shop.order.Order;
 import assignment.shop.order.OrderItem;
 import assignment.shop.item.repository.ItemRepository;
+import assignment.shop.order.dto.request.CancelOrderReqDto;
 import assignment.shop.order.dto.request.CreateOrderRequest;
 import assignment.shop.order.dto.response.OrderHistoryResponse;
 import assignment.shop.order.dto.response.OrderResponse;
@@ -66,9 +67,13 @@ public class OrderService {
     /**
      * 주문내역 조회
      */
-    public Order findOne(Long orderId) {
+    public Order findOne(Long orderId, CancelOrderReqDto cancelOrderReqDto) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchEntityException(ErrorCode.NOT_FOUND_ORDER));
+
+        if(order.getTotalPrice() != cancelOrderReqDto.getCancelPrice()) {
+            throw new OrderException(ErrorCode.CHECK_THE_ORDER_QUANTITY_PRICE);
+        }
         return order;
     }
 
