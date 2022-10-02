@@ -63,7 +63,11 @@ public class OrderController {
         }
 
         //TODO : 주문한사람과 취소한사람이 같은지 검증필요
-        Order order = orderService.findOne(cancelOrderReqDto.getOrderId(), cancelOrderReqDto);
+        Order order = orderService.findOne(cancelOrderReqDto.getOrderId());
+
+        if(order.getTotalPrice() != cancelOrderReqDto.getCancelPrice()) {
+            throw new OrderException(ErrorCode.CHECK_THE_ORDER_QUANTITY_PRICE);
+        }
 
         OrderResponse orderResponse = orderService.cancelOrder(cancelOrderReqDto.getOrderId());
 

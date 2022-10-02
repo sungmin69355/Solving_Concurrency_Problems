@@ -181,14 +181,13 @@ public class OrderServiceTest {
     public void 없는_주문번호_요청시_오류메시지() throws Exception {
         //given
         Long orderId = 1000000L;
-        CancelOrderReqDto cancelOrderReqDto = new CancelOrderReqDto();
 
         //when
         //Order order = orderService.findOne(orderId);
 
         //then
         assertThrows(NoSuchEntityException.class, ()->{
-            orderService.findOne(orderId, cancelOrderReqDto);
+            orderService.findOne(orderId);
         });
     }
 
