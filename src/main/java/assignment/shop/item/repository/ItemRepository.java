@@ -1,29 +1,22 @@
 package assignment.shop.item.repository;
 
 import assignment.shop.item.Item;
-import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
-public class ItemRepository {
-    private final EntityManager em;
+public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    public Item findOne(Long id){
-        return em.find(Item.class,id);
-    }
+    @Query("select i from Item i where i.id = :id")
+    Item findOne(Long id);
 
-    public List<Item> findDisplayDate(LocalDateTime displayDate){
-        return em.createQuery("select i from Item i " +
-                "where i.displayStartDate <= :displayDate and  i.displayEndDate >= :displayDate", Item.class)
-                .setParameter("displayDate", displayDate)
-                .getResultList();
-    }
+    @Query(value = "select i from Item i where  i.displayStartDate <= :displayDate and i.displayEndDate >= :displayDate")
+    List<Item> findDisplayDate(LocalDateTime displayDate);
 }
