@@ -9,7 +9,7 @@ import javax.persistence.Enumerated;
 import java.time.LocalDateTime;
 
 @Data
-public class ItemDto {
+public class ItemResponse {
     private Long id;
     private String name;
     private int price;
@@ -24,7 +24,7 @@ public class ItemDto {
     private LocalDateTime displayStartDate;
     private LocalDateTime displayEndDate;
 
-    public ItemDto(Item item) {
+    public ItemResponse(Item item) {
         id = item.getId();
         name = item.getName();
         price = item.getPrice();

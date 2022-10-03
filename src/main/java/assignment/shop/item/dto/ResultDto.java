@@ -10,7 +10,7 @@ public class ResultDto<T> {
     private String message;
     private T data;
 
-    public ResultDto(String status, List<ItemDto> data) {
+    public ResultDto(String status, List<ItemResponse> data) {
         this.status =status;
         this.data = (T) data;
     }

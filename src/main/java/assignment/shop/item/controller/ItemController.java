@@ -1,7 +1,7 @@
 package assignment.shop.item.controller;
 
 import assignment.shop.item.Item;
-import assignment.shop.item.dto.ItemDto;
+import assignment.shop.item.dto.ItemResponse;
 import assignment.shop.item.dto.ResultDto;
 import assignment.shop.item.service.ItemService;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +29,7 @@ public class ItemController {
     @GetMapping("/items")
     public ResultDto getItemDisplayDate(@RequestParam("display_date")
                                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime displayDate){
-        List<Item> items = itemService.findDisplayDate(displayDate);
-        List<ItemDto> result = items.stream()
-                .map(i -> new ItemDto(i))
-                .collect(toList());
+        List<ItemResponse> result = itemService.findDisplayDate(displayDate);
         return new ResultDto("200", result);
     }
 }
