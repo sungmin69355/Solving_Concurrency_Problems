@@ -23,7 +23,7 @@ public class ItemService {
     public List<ItemResponse> findDisplayDate(LocalDateTime displayDate){
         List<Item> items = itemRepository.findDisplayDate(displayDate);
         List<ItemResponse> result = items.stream()
-                .map(i -> new ItemResponse(i))
+                .map(ItemResponse::new)
                 .collect(toList());
         return result;
     }
