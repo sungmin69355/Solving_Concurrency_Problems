@@ -1,13 +1,11 @@
 package assignment.shop.item;
 
 import assignment.shop.common.commonEntity;
-import assignment.shop.exception.ApiException;
 import assignment.shop.exception.ErrorCode;
 import assignment.shop.exception.ItemException;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.envers.Audited;
-import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
